@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { GetAvailableGedung } from "../api/ApiGedung";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { formatCurrency } from "@/lib/utils";
 import { useState } from "react";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -102,48 +102,54 @@ export function GedungAvailable() {
             </div>
           ) : (
             gedung.map((venue) => (
-              <Card
-                key={venue.id}
-                className="hover:shadow-lg transition-shadow">
-                <div className="relative">
-                  <img
-                    src={
-                      venue.images.length > 0
-                        ? venue.images[0].url
-                        : "https://images.unsplash.com/photo-1706264473113-3036fd904c35?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2VkdW5nfGVufDB8fDB8fHww"
-                    }
-                    alt={venue.name}
-                    className="w-full h-48 object-cover rounded-t-lg"
-                  />
-                  <Badge variant="secondary" className="absolute top-2 right-2">
-                    {venue.ketersediaan}
-                  </Badge>
-                </div>
-                <CardContent className="p-4 space-y-3">
-                  <div className="flex justify-between items-center">
-                    <h3 className="text-xl font-bold">{venue.name}</h3>
-                    <div className="flex items-center text-yellow-500">
-                      <StarIcon size={16} fill="currentColor" />
-                      <span className="ml-1">{"4.8"}</span>
+              <Link to={`/gedung/${venue.id}`}>
+                <Card
+                  key={venue.id}
+                  className="hover:shadow-lg transition-shadow">
+                  <div className="relative">
+                    <img
+                      src={
+                        venue.images.length > 0
+                          ? venue.images[0].url
+                          : "https://images.unsplash.com/photo-1706264473113-3036fd904c35?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2VkdW5nfGVufDB8fDB8fHww"
+                      }
+                      alt={venue.name}
+                      className="w-full h-48 object-cover rounded-t-lg"
+                    />
+                    <Badge
+                      variant="secondary"
+                      className="absolute top-2 right-2">
+                      {venue.ketersediaan}
+                    </Badge>
+                  </div>
+                  <CardContent className="p-4 space-y-3">
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-xl font-bold">{venue.name}</h3>
+                      <div className="flex items-center text-yellow-500">
+                        <StarIcon size={16} fill="currentColor" />
+                        <span className="ml-1">{"4.8"}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center text-muted-foreground">
-                    <MapPin size={16} className="mr-2" />
-                    <p className="truncate">{venue.alamat}</p>
-                  </div>
-                  <div className="flex items-center text-muted-foreground">
-                    <Users size={16} className="mr-2" />
-                    <p>Capacity: {venue.kapasitas} people</p>
-                  </div>
-                  <div className="flex justify-between items-center mt-4">
-                    <p className="text-primary font-bold">
-                      {formatCurrency(venue.harga)}
-                      /hour
-                    </p>
-                    <Button size="sm">Book Now</Button>
-                  </div>
-                </CardContent>
-              </Card>
+                    <div className="flex items-center text-muted-foreground">
+                      <MapPin size={16} className="mr-2" />
+                      <p className="truncate">{venue.alamat}</p>
+                    </div>
+                    <div className="flex items-center text-muted-foreground">
+                      <Users size={16} className="mr-2" />
+                      <p>Capacity: {venue.kapasitas} orang</p>
+                    </div>
+                    <div className="flex justify-between items-center mt-4">
+                      <p className="text-primary font-bold">
+                        {formatCurrency(venue.harga)}
+                        /hour
+                      </p>
+                      <Link to={`/gedung/${venue.id}`}>
+                        <Button size="sm">Book Now</Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             ))
           )}
         </div>

@@ -11,14 +11,12 @@ export function GedungByIdPage() {
   const { id } = useParams();
   const { data } = getAllGedungWithImagesById(id as string);
   const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
-
+  console.log(data);
   if (!data) {
     return (
-      <ProtectedLayout>
-        <div className="flex justify-center items-center min-h-screen">
-          <Loader2 className="animate-spin text-blue-500 size-20" />
-        </div>
-      </ProtectedLayout>
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader2 className="animate-spin text-blue-500 size-20" />
+      </div>
     );
   }
 
@@ -31,16 +29,20 @@ export function GedungByIdPage() {
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Image Section */}
             <div className="rounded-2xl overflow-hidden shadow-xl">
-              <div className="relative pt-[56.25%]">
+              <div className="relative w-full h-[500px]">
                 {" "}
-                {/* 16:9 Aspect Ratio */}
-                <img
-                  src={data.images[0]?.url || "/placeholder.jpg"}
-                  alt={data.name}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                {data.images && (
+                  <img
+                    src={
+                      data.images.length > 0
+                        ? data.images[0].url
+                        : "https://images.unsplash.com/photo-1706264473113-3036fd904c35?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z2VkdW5nfGVufDB8fDB8fHww"
+                    }
+                    alt={data.name}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                )}
                 <div className="absolute inset-0 bg-black bg-opacity-30 flex items-end p-6">
                   <div>
                     <h1 className="text-3xl font-bold text-white mb-2">
@@ -55,7 +57,6 @@ export function GedungByIdPage() {
               </div>
             </div>
 
-            {/* Details and Booking Section */}
             <div className="bg-white border border-gray-100 rounded-2xl shadow-xl p-8 space-y-6">
               <div className="text-center">
                 <h2 className="text-3xl font-extrabold text-gray-900 mb-3">
@@ -71,10 +72,10 @@ export function GedungByIdPage() {
                   <Users className="mx-auto w-8 h-8 text-blue-600 mb-2" />
                   <span className="block text-sm text-gray-600">Kapasitas</span>
                   <span className="text-xl font-bold text-blue-800">
-                    {data.kapasitas} Orang
+                    <strong>{data.kapasitas} orang</strong>
                   </span>
                 </div>
-                <div className="bg-green-50 p-4 rounded-xl text-center">
+                <div className="bg-green-50 p-4 rodata.kapasitasunded-xl text-center">
                   <DollarSign className="mx-auto w-8 h-8 text-green-600 mb-2" />
                   <span className="block text-sm text-gray-600">Harga</span>
                   <span className="text-xl font-bold text-green-800">
@@ -92,11 +93,8 @@ export function GedungByIdPage() {
 
               <Button
                 onClick={handleBookNow}
-                className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105"
-                disabled={data.ketersediaan !== "Tersedia"}>
-                {data.ketersediaan === "Tersedia"
-                  ? "Booking Sekarang"
-                  : "Tidak Tersedia"}
+                className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105">
+                Booking sekarang
               </Button>
             </div>
           </div>

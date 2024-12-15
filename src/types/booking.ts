@@ -5,14 +5,14 @@ export enum BookingStatus {
   CONFIRMED = "CONFIRMED",
   CANCELLED = "CANCELLED",
 }
-
+type BookingStatuss = "PENDING" | "CONFIRMED" | "CANCELLED" | "COMPLETED";
 export interface CreateBookingType {
   userId: number;
   gedungId: string;
   startDate: string;
   endDate: string;
   totalHarga: number;
-  status: BookingStatus;
+  status: BookingStatuss;
 }
 
 export interface BookingData extends CreateBookingType {

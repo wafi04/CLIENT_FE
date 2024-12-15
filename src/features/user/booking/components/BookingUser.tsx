@@ -13,9 +13,11 @@ import { ProtectedLayout } from "@/components/layouts/AuthLayout";
 import { BookingData } from "@/types/booking";
 import { formatCurrency } from "@/lib/utils";
 import { DialogPayment } from "./DialogPayment";
+import { Button } from "@/components/ui/button";
 
 export function BookingUser() {
   const { data, isLoading } = GetAllBookingByUser();
+  console.log(data);
 
   if (isLoading) {
     return <LoadingOverlay />;
@@ -71,10 +73,19 @@ export function BookingUser() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <DialogPayment
-                    bookingId={booking.id}
-                    totalPrice={booking.totalHarga}
-                  />
+                  {booking.status === "PENDING" ? (
+                    <Button variant="outline" className="w-full">
+                      Menunggu Konfirmasi
+                    </Button>
+                  ) : booking.status === "COMPLETED" ? (
+                    <Button variant="default" className="w-full">
+                      Booking Sipa dipakai
+                    </Button>
+                  ) : (
+                    <Button variant="default" className="w-full">
+                      Butuh Confirmation
+                    </Button>
+                  )}
                 </CardFooter>
               </Card>
             ))}

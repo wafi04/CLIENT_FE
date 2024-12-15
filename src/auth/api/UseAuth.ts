@@ -33,7 +33,6 @@ export function UseRegister() {
 
 export function useLogout() {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
   return useMutation({
     mutationKey: ["logout"],
     mutationFn: async () => {

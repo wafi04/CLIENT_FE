@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
-import { Building2, Calendar, User, Menu } from "lucide-react";
+import { Building2, Calendar, Menu } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { useLogout } from "@/auth/api/UseAuth";
+import { useAuth } from "@/lib/AuthProvider";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { mutate, isPending } = useLogout();
+  const { isAdmin } = useAuth();
   return (
     <nav className="sticky top-0 left-0 w-full bg-white shadow-md z-50">
       <div className="container mx-auto px-4">
@@ -31,6 +33,14 @@ const Navbar = () => {
               <Calendar className="h-5 w-5" />
               <span>My Bookings</span>
             </Link>
+            {isAdmin && (
+              <Link
+                to="/dashboard"
+                className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors">
+                <Calendar className="h-5 w-5" />
+                <span>Dashboard</span>
+              </Link>
+            )}
 
             <Button
               onClick={() => mutate()}
@@ -50,25 +60,25 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden px-2 pt-2 pb-4 space-y-3">
+          <nav className="md:hidden px-2 pt-2 pb-4 space-y-5">
             <Link
               to="/venues"
-              className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-lg">
-              Venues
+              className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors">
+              <Building2 className="h-5 w-5" />
+              <span>Venues</span>
             </Link>
             <Link
               to="/bookings"
-              className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-lg">
-              My Bookings
+              className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors">
+              <Calendar className="h-5 w-5" />
+              <span>My Bookings</span>
             </Link>
-            <Link
-              to="/profile"
-              className="block px-3 py-2 text-gray-600 hover:bg-blue-50 rounded-lg">
-              Profile
-            </Link>
-            <button className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-              Book Now
-            </button>
+            <Button
+              onClick={() => mutate()}
+              disabled={isPending}
+              className="bg-blue-600 w-full text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              Logout
+            </Button>
           </nav>
         )}
       </div>
