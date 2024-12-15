@@ -118,12 +118,12 @@ export function SectionGedung() {
                       </span>
                     </div>
                   </div>
-                  <Link to={`/gedung/${gedung.id}`}>
+                  <a href={`/gedung/${gedung.id}`}>
                     <Button variant="outline" className="w-full mt-6 group">
                       View Details
                       <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
-                  </Link>
+                  </a>
                 </CardContent>
               </Card>
             </motion.div>
